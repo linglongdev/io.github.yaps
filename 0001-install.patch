@@ -1,0 +1,72 @@
+From bd82fe28e3ba830ff090c99e7882a791ab4b0584 Mon Sep 17 00:00:00 2001
+From: wjyrich <1071633242@qq.com>
+Date: Wed, 14 Aug 2024 20:03:41 +0800
+Subject: [PATCH] install
+
+---
+ CMakeLists.txt     |  4 ++--
+ src/CMakeLists.txt | 12 +++++++++---
+ src/yaps.desktop   | 11 +++++++++++
+ 3 files changed, 22 insertions(+), 5 deletions(-)
+ create mode 100644 src/yaps.desktop
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 48edb0f..0c285c3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -208,9 +208,9 @@ elseif(UNIX)
+      SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Michael Knopke <knopkem@pacsnode.com>")
+      SET(CPACK_DEBIAN_PACKAGE_NAME "yaps")
+      INSTALL(FILES "${CMAKE_SOURCE_DIR}/copyright"
+-        DESTINATION "/usr/share/doc/${CPACK_DEBIAN_PACKAGE_NAME}")
++        DESTINATION share/doc/${CPACK_DEBIAN_PACKAGE_NAME})
+      INSTALL(FILES "${CMAKE_SOURCE_DIR}/changelog.gz"
+-        DESTINATION "/usr/share/doc/${CPACK_DEBIAN_PACKAGE_NAME}")
++        DESTINATION share/doc/${CPACK_DEBIAN_PACKAGE_NAME})
+ 
+ endif()    
+ 
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 6e9c0a3..28d277f 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -70,9 +70,15 @@ SOURCE_GROUP("Header Files" FILES ${HEADERS})
+ SOURCE_GROUP("Source Files" FILES ${SOURCES})
+ SOURCE_GROUP("Generated Files" FILES ${HEADERS_MOC})
+ 
+-install(TARGETS ${PROJECT_NAME}  RUNTIME DESTINATION  ${BIN_INSTALL_DIR} BUNDLE DESTINATION  ${BIN_INSTALL_DIR}  )
++install(TARGETS ${PROJECT_NAME}  RUNTIME DESTINATION  bin BUNDLE DESTINATION  bin  )
+ 
++install(FILES resources/yaps.png
++        DESTINATION share/icons)
++
++
++install(FILES yaps.desktop
++            DESTINATION share/applications)
+ #deploy qt plugins
+-INSTALL( DIRECTORY ${QT5_ROOT_PREFIX}/plugins/platforms DESTINATION ${BIN_INSTALL_DIR} )
+-INSTALL( DIRECTORY ${QT5_ROOT_PREFIX}/plugins/imageformats DESTINATION ${BIN_INSTALL_DIR} )
++#INSTALL( DIRECTORY ${QT5_ROOT_PREFIX}/plugins/platforms DESTINATION ${BIN_INSTALL_DIR} )
++#INSTALL( DIRECTORY ${QT5_ROOT_PREFIX}/plugins/imageformats DESTINATION ${BIN_INSTALL_DIR} )
+ 
+diff --git a/src/yaps.desktop b/src/yaps.desktop
+new file mode 100644
+index 0000000..3bb55fa
+--- /dev/null
++++ b/src/yaps.desktop
+@@ -0,0 +1,11 @@
++[Desktop Entry]
++Categories=Accessibility;Qt;Utility;
++Exec=yaps
++Name=yaps
++Name[zh_CN]=yaps
++Icon=yaps
++StartupNotify=false
++Terminal=false
++Type=Application
++GenericName=yaps
++Version=1.0
+\ No newline at end of file
+-- 
+2.43.4
+
