@@ -1,0 +1,31 @@
+version: "1"
+
+package:
+  id: io.github.yaps
+  name: yaps
+  version: 0.0.0.1
+  kind: app
+  description: |
+    YAPS - Yet Another Photo Sorter. A photo sorting tool to auto-generate folders and file names based on EXIF data
+
+command:
+  - /opt/apps/io.github.yaps/files/bin/yaps
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/wjyrich/yaps.git
+    version: master
+    commit: e4eb29ac81bb296e01453ef2d7b8a7cdf6c20303
+
+build: |
+  cd /project/linglong/sources/yaps.git
+  git apply ../../../0001-install.patch
+  mkdir build
+  cd build
+  cmake .. \
+        -DCMAKE_INSTALL_PREFIX=${PREFIX} \
+        -DQT5_ROOT_PREFIX=${PREFIX}
+  cmake --build . --target install -j$(nproc --all)
